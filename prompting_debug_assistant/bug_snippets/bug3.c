@@ -5,7 +5,6 @@
 void safe_copy(char *input) {
     char buffer[10];
     int len = strlen(input);
-
     for (int i = 0; i <= len; i++) {
         buffer[i] = input[i];
     }
@@ -14,7 +13,6 @@ void safe_copy(char *input) {
 }
 
 int main() {
-
     char *my_str = "0123456789"; 
     
     printf("Original: %s\n", my_str);

@@ -1,31 +1,28 @@
 # Bug Descriptions for AI Debugging Exercise
 
 ## Bug 1 – bug1.py
-
-**Intended Behavior**: Return the last n items of a list (or append to log).
+**Intended Behavior**: The function should append a user action to the provided log. If no log argument is passed, it must strictly create a NEW empty list.
 **Issue Type**: Logical Error / Mutable Default Argument.
-**Notes**: The default argument `log=[]` persists across calls. The fix must ensure a fresh list is created when the argument is missing.
+**Notes**: Currently, the default `log=[]` is evaluated only once at definition. This implies the list persists across calls, causing data leakage between different users.
 
 ## Bug 2 – bug2.js
-
-**Intended Behavior**: Fetch user data asynchronously and process it using the class method.
+**Intended Behavior**: The class should fetch user data asynchronously and then process it using its own `processUser` method.
 **Issue Type**: Runtime Error / Scope (`this` context).
-**Notes**: The `this` context is lost in the callback. The fix requires binding `this` or using an arrow function.
+**Notes**: The `this` context is lost inside the `setTimeout` callback. The code fails because `this.processUser` becomes undefined. The fix implies binding context or using arrow functions.
 
 ## Bug 3 – bug3.c
-
-**Intended Behavior**: Safely copy a string into a 10-byte buffer without overflow.
+**Intended Behavior**: The function must safely copy a string into a 10-byte buffer without overflowing memory.
 **Issue Type**: Off-by-one Error / Memory Safety.
-**Notes**: The loop condition `<=` writes past the buffer limit. The fix must stop before the limit to accommodate the null terminator.
+**Notes**: The loop condition `<=` writes 11 characters (including null terminator) into a 10-byte buffer. This causes a buffer overflow. The fix must stop strictly before the limit.
 
 ## Bug 4 – bug4.py
-
-**Intended Behavior**: Calculate the average of all even numbers in a list.
+**Intended Behavior**: Calculate the mathematical average of all even numbers present in the list.
 **Issue Type**: Syntax Error + Runtime Error (ZeroDivision).
-**Notes**: Missing colon (`:`) causes a syntax error. The fix must also handle the case where the list is empty or has no even numbers (e.g., return 0).
+**Notes**: 
+1. Syntax: Missing colon (`:`) after `if`.
+2. Logic: If the list is empty or has no evens, `count` remains 0, causing a crash. The fix must handle the divide-by-zero case.
 
 ## Bug 5 – bug5.js
-
-**Intended Behavior**: Calculate the mathematical sum of item prices in a cart.
+**Intended Behavior**: Calculate the mathematical sum of the numerical prices in the cart.
 **Issue Type**: Misuse of Data Types (Type Coercion).
-**Notes**: Prices are strings, causing concatenation. The fix must parse strings to numbers (float) before addition.
+**Notes**: The input prices are Strings ("10.00"). The `+` operator concatenates them instead of adding them. The fix implies parsing strings to floats before calculation.
